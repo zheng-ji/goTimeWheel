@@ -121,11 +121,7 @@ func (tw *TimeWheel) handle() {
 		e = next
 	}
 
-	if tw.currPos == tw.slotNum-1 {
-		tw.currPos = 0
-	} else {
-		tw.currPos++
-	}
+	tw.currPos = (tw.currPos + 1) % tw.slotNum
 }
 
 // getPosAndCircle Func: parse duration by interval to get circle and position
