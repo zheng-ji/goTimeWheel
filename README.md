@@ -1,6 +1,7 @@
 ## goTimeWheel
 
 [![Build Status](https://travis-ci.org/zheng-ji/goTimeWheel.svg)](https://travis-ci.org/zheng-ji/goTimeWheel)
+[![codecov](https://codecov.io/gh/zheng-ji/goTimeWheel/branch/master/graph/badge.svg)](https://codecov.io/gh/zheng-ji/goTimeWheel)
 [![GoDoc](https://godoc.org/github.com/zheng-ji/goTimeWheele?status.svg)](https://godoc.org/github.com/zheng-ji/goTimeWheel)
 
 TimeWheel Implemented By Go.
