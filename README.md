@@ -26,37 +26,6 @@ go get github.com/zheng-ji/goTimeWheel
 Example
 -------
 
-```
-package main
-
-import (
-	"github.com/euclidr/bloomf"
-    "github.com/go-redis/redis"
-)
-
-
-func main() {
-	client := redis.NewClient(&redis.Options{
-        Addr: "localhost:6379",
-    })
-    bl, err := bloomf.New(client, "bf" 1000000, 0.001)
-    if err == bloomf.ErrDuplicated {
-        bl, _ := bloomf.GetByName(client, "bf")
-    }
-
-    bl.Add([]bytes("awesome key"))
-
-    exists, _ := bl.Exists([]bytes("awesome key"))
-    if exists {
-        ...
-    }
-
-    ...
-
-    // bl.Clear() // you can clean up all datas in redis
-}
-```
-
 ```go
 import (
     "fmt"
