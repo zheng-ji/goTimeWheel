@@ -26,26 +26,55 @@ go get github.com/zheng-ji/goTimeWheel
 Example
 -------
 
+```
+package main
+
+import (
+	"github.com/euclidr/bloomf"
+    "github.com/go-redis/redis"
+)
+
+
+func main() {
+	client := redis.NewClient(&redis.Options{
+        Addr: "localhost:6379",
+    })
+    bl, err := bloomf.New(client, "bf" 1000000, 0.001)
+    if err == bloomf.ErrDuplicated {
+        bl, _ := bloomf.GetByName(client, "bf")
+    }
+
+    bl.Add([]bytes("awesome key"))
+
+    exists, _ := bl.Exists([]bytes("awesome key"))
+    if exists {
+        ...
+    }
+
+    ...
+
+    // bl.Clear() // you can clean up all datas in redis
+}
+```
+
 ```go
 import (
-	"fmt"
-	"github.com/zheng-ji/goTimeWheele"
+    "fmt"
+    "github.com/zheng-ji/goTimeWheele"
 )
 
 func main() {
-  tw := goTimeWheel.New(1*time.Second, 3600)
-  tw.Start()
-
-   // "ID1" means the timer's name
-   // Specify a function and params, it will run after 3s later
-  name := "ID1"
-  params := map[string]int{"age": 1}
-  fn := func(data interface{}) {
-	fmt.Printf("hello, %v\n", data)
-  }
-  tw.AddTimer(3*time.Second, name, fn, params)
-
-  // Your Logic Code
+    tw := goTimeWheel.New(1*time.Second, 3600)
+    tw.Start()
+    // "ID1" means the timer's name
+    // Specify a function and params, it will run after 3s later
+    name := "ID1"
+    params := map[string]int{"age": 1}
+    fn := func(data interface{}) {
+        fmt.Printf("hello, %v\n", data)
+    }
+    tw.AddTimer(3*time.Second, name, fn, params)
+    // Your Logic Code
 }
 ```
 
