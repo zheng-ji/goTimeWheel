@@ -33,12 +33,19 @@ import (
 )
 
 func main() {
-	tw := goTimeWheel.New(1*time.Second, 3600)
+  tw := goTimeWheel.New(1*time.Second, 3600)
+  tw.Start()
 
-    // 3s Later the function will run
-	tw.AddTimer(3 *time.Second, "ID1", func(data interface{}) {
-		fmt.Printf("hello, %v\n", data)
-	}, map[string]int{"age": 1})
+   // "ID1" means the timer's name
+   // Specify a function and params, it will run after 3s later
+  name := "ID1"
+  params := map[string]int{"age": 1}
+  fn := func(data interface{}) {
+	fmt.Printf("hello, %v\n", data)
+  }
+  tw.AddTimer(3*time.Second, name, fn, params)
+
+  // Your Logic Code
 }
 ```
 

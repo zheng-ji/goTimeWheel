@@ -12,9 +12,12 @@ func TestAddTask(t *testing.T) {
 
 	tw.Start()
 
-	tw.AddTimer(3*time.Second, "key1", func(data interface{}) {
+	name := "ID1"
+	params := map[string]int{"age": 1}
+	fn := func(data interface{}) {
 		fmt.Printf("hello, %v\n", data)
-	}, map[string]int{"age": 1})
+	}
+	tw.AddTimer(3*time.Second, name, fn, params)
 
 	time.Sleep(time.Duration(5) * time.Second)
 }
