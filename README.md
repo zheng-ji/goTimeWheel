@@ -33,8 +33,10 @@ import (
 )
 
 func main() {
+    // timer ticker
     tw := goTimeWheel.New(1*time.Second, 3600)
     tw.Start()
+
     // "ID1" means the timer's name
     // Specify a function and params, it will run after 3s later
     name := "ID1"
@@ -43,6 +45,7 @@ func main() {
         fmt.Printf("hello, %v\n", data)
     }
     tw.AddTimer(3*time.Second, name, fn, params)
+
     // Your Logic Code
 }
 ```

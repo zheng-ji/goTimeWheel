@@ -5,33 +5,36 @@ import (
 	"time"
 )
 
+// TimeWheel Struct
 type TimeWheel struct {
-	interval time.Duration
+	interval time.Duration // ticker run interval
 
 	ticker *time.Ticker
 
 	slots []*list.List
 
-	keyPosMap map[interface{}]int
+	keyPosMap map[interface{}]int // keep each timer's postion
 
 	slotNum int
-	currPos int
+	currPos int // timewheel current postion
 
-	addChannel    chan Task
-	removeChannel chan interface{}
-	stopChannel   chan bool
+	addChannel    chan Task        // channel to  add Task
+	removeChannel chan interface{} // channel to remove Task
+	stopChannel   chan bool        // stop signal
 }
 
+// Task Struct
 type Task struct {
-	delay time.Duration
+	key interface{} // Timer Task ID
 
-	circle int
-	key    interface{}
+	delay  time.Duration // Run after delay
+	circle int           // when circle eqaul 0 will trigger
 
-	fn     func(interface{})
-	params interface{}
+	fn     func(interface{}) // custom function
+	params interface{}       // custom parms
 }
 
+// New Func: Generate TimeWheel with ticker and slotNum
 func New(interval time.Duration, slotNum int) *TimeWheel {
 
 	if interval <= 0 || slotNum <= 0 {
@@ -56,6 +59,7 @@ func New(interval time.Duration, slotNum int) *TimeWheel {
 	return tw
 }
 
+// Start Func: start ticker and monitor channel
 func (tw *TimeWheel) Start() {
 	tw.ticker = time.NewTicker(tw.interval)
 	go tw.start()
@@ -95,6 +99,7 @@ func (tw *TimeWheel) RemoveTimer(key interface{}) {
 	tw.removeChannel <- key
 }
 
+// handle Func: Do currPosition slots Task
 func (tw *TimeWheel) handle() {
 	l := tw.slots[tw.currPos]
 
@@ -123,6 +128,7 @@ func (tw *TimeWheel) handle() {
 	}
 }
 
+// getPosAndCircle Func: parse duration by interval to get circle and position
 func (tw *TimeWheel) getPosAndCircle(d time.Duration) (pos int, circle int) {
 	circle = int(d.Seconds()) / int(tw.interval.Seconds()) / tw.slotNum
 	pos = tw.currPos + int(tw.interval.Seconds())/int(tw.interval.Seconds())%tw.slotNum
