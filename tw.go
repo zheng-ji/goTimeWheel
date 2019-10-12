@@ -28,7 +28,7 @@ type Task struct {
 	key interface{} // Timer Task ID
 
 	delay  time.Duration // Run after delay
-	circle int           // when circle eqaul 0 will trigger
+	circle int           // when circle equal 0 will trigger
 
 	fn     func(interface{}) // custom function
 	params interface{}       // custom parms
