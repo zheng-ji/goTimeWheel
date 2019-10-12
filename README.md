@@ -47,6 +47,7 @@ func main() {
     tw.AddTimer(3*time.Second, name, fn, params)
 
     // Your Logic Code
+    select{}
 }
 ```
 
