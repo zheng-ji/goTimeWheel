@@ -29,7 +29,7 @@ Example
 ```go
 import (
     "fmt"
-    "github.com/zheng-ji/goTimeWheele"
+    "github.com/zheng-ji/goTimeWheel"
 )
 
 func main() {
@@ -48,6 +48,7 @@ func main() {
 
     // Your Logic Code
     select{}
+
 }
 ```
 
