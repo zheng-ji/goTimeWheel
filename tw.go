@@ -104,8 +104,10 @@ func (tw *TimeWheel) handle() {
 	l := tw.slots[tw.currPos]
 
 	for e := l.Front(); e != nil; {
+		curElement := e
 		task := e.Value.(*Task)
-
+		next := e.Next()
+		e = next
 		if task.circle > 0 {
 			task.circle--
 			continue
@@ -113,12 +115,10 @@ func (tw *TimeWheel) handle() {
 
 		go task.fn(task.params)
 
-		next := e.Next()
-		l.Remove(e)
+		l.Remove(curElement)
 		if task.key != nil {
 			delete(tw.keyPosMap, task.key)
 		}
-		e = next
 	}
 
 	tw.currPos = (tw.currPos + 1) % tw.slotNum
@@ -127,7 +127,8 @@ func (tw *TimeWheel) handle() {
 // getPosAndCircle Func: parse duration by interval to get circle and position
 func (tw *TimeWheel) getPosAndCircle(d time.Duration) (pos int, circle int) {
 	circle = int(d.Seconds()) / int(tw.interval.Seconds()) / tw.slotNum
-	pos = tw.currPos + int(tw.interval.Seconds())/int(tw.interval.Seconds())%tw.slotNum
+
+	pos = (tw.currPos + int(d.Seconds())/int(tw.interval.Seconds())) % tw.slotNum
 	return
 }
 
