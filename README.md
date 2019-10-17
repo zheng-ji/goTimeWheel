@@ -5,7 +5,7 @@
 [![GoDoc](https://godoc.org/github.com/zheng-ji/goTimeWheele?status.svg)](https://godoc.org/github.com/zheng-ji/goTimeWheel)
 
 TimeWheel Implemented By Go.
-Go 实现的时间轮，俗称定时器
+Go 实现的时间轮，俗称定时器 [Link](http://zheng-ji.info/2019/10/11/2019-10-11-timewheel/)
 
 ![goTimeWheel](https://github.com/zheng-ji/goTimeWheel/blob/master/goTimeWheel.png)
 
